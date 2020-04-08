@@ -1,14 +1,11 @@
 package testing
 
-import (
-	"io/ioutil"
-	"log"
-	"os"
-	"strings"
-	"testing"
-
-	"github.com/gruntwork-io/terratest/modules/terraform"
-)
+import "github.com/gruntwork-io/terratest/modules/terraform"
+import "io/ioutil"
+import "log"
+import "os"
+import "strings"
+import "testing"
 
 func TestModule(t *testing.T) {
 	files, err := ioutil.ReadDir("./")
