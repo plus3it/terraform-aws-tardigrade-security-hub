@@ -1,0 +1,41 @@
+dist: xenial
+
+language: node_js
+
+node_js:
+  - "8"
+
+stages:
+  - lint
+  - deploy
+
+jobs:
+  include:
+    - stage: lint
+      name: Project Syntax Verification
+      script: make && make docker/run target=lint
+    - stage: deploy
+      if: branch = master AND type = push AND repo = plus3it/terraform-aws-tardigrade-security-hub
+      before_script:
+        - |
+          PRIOR_VERSION=$(git describe --abbrev=0 --tags)
+          RELEASE_VERSION=$(grep current_version $TRAVIS_BUILD_DIR/.bumpversion.cfg | sed 's/^.*= //' )
+          RELEASE_BODY="* [terraform-aws-tardigrade-security-hub v$RELEASE_VERSION CHANGELOG](https://github.com/plus3it/terraform-aws-tardigrade-security-hub/blob/$RELEASE_VERSION/CHANGELOG.md)"
+          export PRIOR_VERSION RELEASE_VERSION RELEASE_BODY
+      script: skip
+      before_deploy:
+        - |
+          (set -x; git tag -a $RELEASE_VERSION -m $RELEASE_VERSION)
+      deploy:
+        provider: releases
+        api_key:
+          secure:
+        name: $RELEASE_VERSION
+        body: $RELEASE_BODY
+        tag_name: $RELEASE_VERSION
+        target_commitish: $TRAVIS_COMMIT
+        draft: false
+        on:
+          branch: master
+          repo: plus3it/terraform-aws-tardigrade-security-hub
+          condition: '"$PRIOR_VERSION" != "$RELEASE_VERSION"'
