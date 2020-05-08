@@ -62,10 +62,10 @@ resource "null_resource" "create" {
   count = var.create_securityhub_member && var.auto_accept ? 1 : 0
 
   # The invite from the master sometimes takes a few seconds to register
-  # before it can be accepted in the target account, so we pause for 3 seconds to let
+  # before it can be accepted in the target account, so we pause for 5 seconds to let
   # the invite propagate
   provisioner "local-exec" {
-    command = "python -c 'import time; time.sleep(3)'"
+    command = "python -c 'import time; time.sleep(5)'"
   }
 
   provisioner "local-exec" {
@@ -79,6 +79,11 @@ resource "null_resource" "create" {
   provisioner "local-exec" {
     when    = destroy
     command = self.triggers.destroy_command
+  }
+
+  provisioner "local-exec" {
+    when    = destroy
+    command = "python -c 'import time; time.sleep(5)'"
   }
 
   lifecycle {
