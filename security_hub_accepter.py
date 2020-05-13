@@ -59,7 +59,12 @@ def filter_none_values(data):
 
 
 def assume_role(
-    session, role_arn, duration=3600, session_name=None, serial_number=None
+    session,
+    role_arn,
+    profile=None,
+    duration=3600,
+    session_name=None,
+    serial_number=None,
 ):
     fetcher = botocore.credentials.AssumeRoleCredentialFetcher(
         session.create_client,
@@ -74,7 +79,7 @@ def assume_role(
         ),
         cache=botocore.credentials.JSONFileCache(),
     )
-    role_session = botocore.session.Session()
+    role_session = botocore.session.Session(profile=profile)
     role_session.register_component(
         "credential_provider",
         botocore.credentials.CredentialResolver([AssumeRoleProvider(fetcher)]),
@@ -106,8 +111,10 @@ def main(
     role_arn = role_arn or None
 
     session = botocore.session.Session(profile=profile)
+    session.set_default_client_config(botocore.client.Config(region_name=region))
+
     if role_arn:
-        session = assume_role(session, role_arn)
+        session = assume_role(session, role_arn, profile=profile)
 
     sechub = session.create_client("securityhub", region_name=region)
 
