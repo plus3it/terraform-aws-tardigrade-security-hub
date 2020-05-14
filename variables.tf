@@ -43,5 +43,5 @@ variable "role_arn" {
 variable "region" {
   description = "(Optional) Used by null_resource to establish botocore client"
   type        = string
-  default     = null
+  default     = ""
 }
