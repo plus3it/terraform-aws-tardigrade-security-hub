@@ -34,7 +34,7 @@ Note: the implementation `tests/create_securityhub_member` will require you to p
 | email\_address | Email address associated with the member account. Required input for the SecurityHub member invitation. | `string` | `null` | no |
 | product\_subscription\_arns | List of product arns to subscribe to. See https://www.terraform.io/docs/providers/aws/r/securityhub_product_subscription.html | `list(string)` | `[]` | no |
 | profile | (Optional) Used by null\_resource to establish botocore session | `string` | `""` | no |
-| region | (Optional) Used by null\_resource to establish botocore client | `string` | `null` | no |
+| region | (Optional) Used by null\_resource to establish botocore client | `string` | `""` | no |
 | role\_arn | (Optional) Used by null\_resource to assume a role in the accepter account | `string` | `""` | no |
 | standard\_subscription\_arns | List of standard arns to subscribe to. See https://www.terraform.io/docs/providers/aws/r/securityhub_standards_subscription.html | `list(string)` | `[]` | no |
 
