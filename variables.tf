@@ -1,47 +1,45 @@
-variable "create_securityhub_member" {
-  description = "Controls whether to create the GuardDuty member"
-  type        = bool
-  default     = true
+variable action_targets {
+  description = "Schema list of SecurityHub action targets."
+  type = list(object({
+    name        = string
+    description = string
+    identifer   = string
+  }))
+  default = []
 }
 
-variable "email_address" {
-  description = "Email address associated with the member account. Required input for the SecurityHub member invitation."
-  type        = string
-  default     = null
-}
-
-variable "auto_accept" {
-  description = "Controls whether to automatically accept the invitation"
-  type        = bool
-  default     = true
-}
-
-variable "standard_subscription_arns" {
+variable standard_subscription_arns {
   description = "List of standard arns to subscribe to. See https://www.terraform.io/docs/providers/aws/r/securityhub_standards_subscription.html"
   type        = list(string)
   default     = []
 }
 
-variable "product_subscription_arns" {
+variable product_subscription_arns {
   description = "List of product arns to subscribe to. See https://www.terraform.io/docs/providers/aws/r/securityhub_product_subscription.html"
   type        = list(string)
   default     = []
 }
 
-variable "profile" {
-  description = "(Optional) Used by null_resource to establish botocore session"
+variable member_email {
+  description = "(Optional) Email address associated with the member account. Required for the cross-account SecurityHub member invite workflow"
+  type        = string
+  default     = null
+}
+
+variable accepter_profile {
+  description = "(Optional) Used by null_resource accepter to establish botocore session. Required for the cross-account SecurityHub member accept workflow"
   type        = string
   default     = ""
 }
 
-variable "role_arn" {
-  description = "(Optional) Used by null_resource to assume a role in the accepter account"
+variable accepter_role_arn {
+  description = "(Optional) Used by null_resource accepter to assume a role in the accepter account. Required for the cross-account SecurityHub member accept workflow"
   type        = string
   default     = ""
 }
 
-variable "region" {
-  description = "(Optional) Used by null_resource to establish botocore client"
+variable accepter_region {
+  description = "(Optional) Used by null_resource accepter to establish botocore client. Required for the cross-account SecurityHub member accept workflow"
   type        = string
   default     = ""
 }

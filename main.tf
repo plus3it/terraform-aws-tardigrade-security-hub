@@ -1,132 +1,72 @@
-provider "aws" {}
-
-provider "aws" {
+provider aws {
   alias = "master"
 }
 
-data "aws_caller_identity" "member" {
+# Enable SecurityHub
+module account {
+  source = "./modules/account"
 }
 
-data "aws_caller_identity" "master" {
+# Send invite from master
+module member {
+  source = "./modules/member"
+  count  = local.cross_account ? 1 : 0
+  providers = {
+    aws = aws.master
+  }
+
+  account_id = data.aws_caller_identity.this.account_id
+  email      = var.member_email
+
+  depends_on = [
+    module.account
+  ]
+}
+
+# Accept invite
+module accept {
+  source = "./modules/accepter"
+  count  = local.cross_account ? 1 : 0
+
+  master_account_id = data.aws_caller_identity.master.account_id
+
+  profile  = var.accepter_profile
+  role_arn = var.accepter_role_arn
+  region   = var.accepter_region
+
+  depends_on = [
+    module.member
+  ]
+}
+
+# Manage subscriptions
+module subscriptions {
+  source = "./modules/subscriptions"
+
+  standard_subscription_arns = var.standard_subscription_arns
+  product_subscription_arns  = var.product_subscription_arns
+
+  depends_on = [
+    module.account
+  ]
+}
+
+# Manage action targets
+module action_targets {
+  source   = "./modules/action_target"
+  for_each = { for action_target in var.action_targets : action_target.name => action_target }
+
+  name        = each.key
+  description = each.value.description
+  identifier  = each.value.identifier
+}
+
+locals {
+  cross_account = data.aws_caller_identity.this.account_id != data.aws_caller_identity.master.account_id
+}
+
+data aws_caller_identity this {}
+
+data aws_caller_identity master {
   provider = aws.master
-}
-
-# Create SecurityHub member
-resource "aws_securityhub_account" "this" {
-  count = var.create_securityhub_member ? 1 : 0
-
-  provider = aws
-}
-
-# Send invitation to member from the master
-resource "aws_securityhub_member" "this" {
-  count = var.create_securityhub_member ? 1 : 0
-
-  provider   = aws.master
-  depends_on = [aws_securityhub_account.this]
-
-  account_id = data.aws_caller_identity.member.account_id
-  email      = var.email_address
-  invite     = true
-}
-
-# Subscribe to the AWS provided subscriptions
-locals {
-  standard_arns = var.create_securityhub_member ? toset(var.standard_subscription_arns) : toset([])
-}
-
-resource "aws_securityhub_standards_subscription" "this" {
-  for_each = local.standard_arns
-
-  provider   = aws
-  depends_on = [aws_securityhub_account.this]
-
-  standards_arn = each.value
-}
-
-# Subscribe to various products
-locals {
-  product_arns = var.create_securityhub_member ? toset(var.product_subscription_arns) : toset([])
-}
-
-resource "aws_securityhub_product_subscription" "this" {
-  for_each = local.product_arns
-
-  provider   = aws
-  depends_on = [aws_securityhub_account.this]
-
-  product_arn = each.value
-}
-
-resource "null_resource" "create" {
-  count = var.create_securityhub_member && var.auto_accept ? 1 : 0
-
-  # The invite from the master sometimes takes a few seconds to register
-  # before it can be accepted in the target account, so we pause for 5 seconds to let
-  # the invite propagate
-  provisioner "local-exec" {
-    command = "python -c 'import time; time.sleep(5)'"
-  }
-
-  provisioner "local-exec" {
-    command = join(" ", local.create)
-  }
-
-  triggers = {
-    destroy_command = join(" ", local.destroy)
-  }
-
-  provisioner "local-exec" {
-    when    = destroy
-    command = self.triggers.destroy_command
-  }
-
-  provisioner "local-exec" {
-    when    = destroy
-    command = "python -c 'import time; time.sleep(5)'"
-  }
-
-  lifecycle {
-    ignore_changes = [triggers["destroy_command"]]
-  }
-}
-
-locals {
-  # Replace a terraform-aws-provider sts assumed role with the equivalent iam role, i.e:
-  #     arn:aws:sts::<account-id>:assumed-role/<role-name>/<numeric-session-id>
-  # =>
-  #     arn:aws:iam::<account-id>:role/<role-name>
-  # This allows a user to simply pass `role_arn = "${data.aws_caller_identity.this.arn}"`
-  role_arn = replace(
-    var.role_arn,
-    "/(.*):sts:(.*):assumed-role/(.*)/[0-9]*$/",
-    "$1:iam:$2:role/$3",
-  )
-
-  create = [
-    "python",
-    "\"${path.module}/security_hub_accepter.py\"",
-    "--master-account-id",
-    "\"${data.aws_caller_identity.master.account_id}\"",
-    "--profile",
-    "\"${var.profile}\"",
-    "--role-arn",
-    "\"${local.role_arn}\"",
-    "--region",
-    "\"${var.region}\"",
-  ]
-
-  destroy = [
-    "python",
-    "\"${path.module}/security_hub_accepter.py\"",
-    "--master-account-id",
-    "\"${data.aws_caller_identity.master.account_id}\"",
-    "--remove-master",
-    "--profile",
-    "\"${var.profile}\"",
-    "--role-arn",
-    "\"${local.role_arn}\"",
-    "--region",
-    "\"${var.region}\"",
-  ]
 }
