@@ -120,7 +120,7 @@ def main(
 
     if remove_master:
         sechub.disassociate_from_master_account()
-        log.info("Dissaociated member from master account: %s", master_account_id)
+        log.info("Disassociated member from master account: %s", master_account_id)
     else:
         invite_id = get_pending_invite_id(sechub, master_account_id)
 
@@ -129,7 +129,7 @@ def main(
 
         log.info("Found pending invite_id: %s", invite_id)
         accept_pending_invite(sechub, master_account_id, invite_id)
-        log.info("Accepted invite for SecurityHub master: %s", master_account_id)
+        log.info("Accepted invite from SecurityHub master: %s", master_account_id)
 
 
 if __name__ == "__main__":

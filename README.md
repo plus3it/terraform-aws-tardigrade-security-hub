@@ -15,7 +15,7 @@ Note: the implementation `tests/create_securityhub_member` will require you to p
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.12 |
+| terraform | >= 0.13 |
 
 ## Providers
 
@@ -23,23 +23,27 @@ Note: the implementation `tests/create_securityhub_member` will require you to p
 |------|---------|
 | aws | n/a |
 | aws.master | n/a |
-| null | n/a |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| auto\_accept | Controls whether to automatically accept the invitation | `bool` | `true` | no |
-| create\_securityhub\_member | Controls whether to create the GuardDuty member | `bool` | `true` | no |
-| email\_address | Email address associated with the member account. Required input for the SecurityHub member invitation. | `string` | `null` | no |
+| accepter\_profile | (Optional) Used by null\_resource accepter to establish botocore session. Required for the cross-account SecurityHub member accept workflow | `string` | `""` | no |
+| accepter\_region | (Optional) Used by null\_resource accepter to establish botocore client. Required for the cross-account SecurityHub member accept workflow | `string` | `""` | no |
+| accepter\_role\_arn | (Optional) Used by null\_resource accepter to assume a role in the accepter account. Required for the cross-account SecurityHub member accept workflow | `string` | `""` | no |
+| action\_targets | Schema list of SecurityHub action targets. | <pre>list(object({<br>    name        = string<br>    description = string<br>    identifer   = string<br>  }))</pre> | `[]` | no |
+| member\_email | (Optional) Email address associated with the member account. Required for the cross-account SecurityHub member invite workflow | `string` | `null` | no |
 | product\_subscription\_arns | List of product arns to subscribe to. See https://www.terraform.io/docs/providers/aws/r/securityhub_product_subscription.html | `list(string)` | `[]` | no |
-| profile | (Optional) Used by null\_resource to establish botocore session | `string` | `""` | no |
-| region | (Optional) Used by null\_resource to establish botocore client | `string` | `""` | no |
-| role\_arn | (Optional) Used by null\_resource to assume a role in the accepter account | `string` | `""` | no |
 | standard\_subscription\_arns | List of standard arns to subscribe to. See https://www.terraform.io/docs/providers/aws/r/securityhub_standards_subscription.html | `list(string)` | `[]` | no |
 
 ## Outputs
 
-No output.
+| Name | Description |
+|------|-------------|
+| accept | Object containing the SecurityHub (null) accepter resource |
+| account | Object containing the SecurityHub account resource |
+| action\_targets | Object containing the SecurityHub action targets resources |
+| member | Object containing the SecurityHub member resource |
+| subscriptions | Object containing the SecurityHub subscriptions resources |
 
 <!-- END TFDOCS -->
