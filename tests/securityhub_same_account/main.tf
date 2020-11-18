@@ -9,7 +9,7 @@ provider aws {
   profile = "resource-owner"
 }
 
-module "securityhub" {
+module securityhub {
   source = "../../"
 
   providers = {
@@ -26,8 +26,6 @@ module "securityhub" {
     "arn:aws:securityhub:us-east-1:453761072151:product/turbot/turbot",
   ]
 }
-
-data "aws_region" "current" {}
 
 output securityhub {
   value = module.securityhub

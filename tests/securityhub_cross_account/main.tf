@@ -9,7 +9,7 @@ provider aws {
   profile = "resource-owner"
 }
 
-module "securityhub" {
+module securityhub_member {
   source = "../../"
 
   providers = {
@@ -31,8 +31,8 @@ module "securityhub" {
   ]
 }
 
-data "aws_region" "current" {}
+data aws_region current {}
 
 output securityhub {
-  value = module.securityhub
+  value = module.securityhub_member
 }
