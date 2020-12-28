@@ -1,1 +1,1 @@
-resource aws_securityhub_account this {}
+resource "aws_securityhub_account" "this" {}
