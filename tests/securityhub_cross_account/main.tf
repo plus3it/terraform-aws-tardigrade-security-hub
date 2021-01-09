@@ -1,15 +1,15 @@
-provider aws {
+provider "aws" {
   region  = "us-east-1"
   profile = "resource-member"
 }
 
-provider aws {
+provider "aws" {
   region  = "us-east-1"
   alias   = "resource-owner"
   profile = "resource-owner"
 }
 
-module securityhub_member {
+module "securityhub_member" {
   source = "../../"
 
   providers = {
@@ -31,8 +31,8 @@ module securityhub_member {
   ]
 }
 
-data aws_region current {}
+data "aws_region" "current" {}
 
-output securityhub {
+output "securityhub" {
   value = module.securityhub_member
 }
