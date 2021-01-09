@@ -1,14 +1,14 @@
-resource null_resource accepter {
-  provisioner local-exec {
+resource "null_resource" "accepter" {
+  provisioner "local-exec" {
     command = join(" ", local.create)
   }
 
-  provisioner local-exec {
+  provisioner "local-exec" {
     when    = destroy
     command = self.triggers.destroy_command
   }
 
-  provisioner local-exec {
+  provisioner "local-exec" {
     when    = destroy
     command = "python -c 'import time; time.sleep(5)'"
   }
