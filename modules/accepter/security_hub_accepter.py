@@ -6,7 +6,6 @@ import collections
 import logging
 import os
 import sys
-import time
 
 import botocore.credentials
 import botocore.session
@@ -38,23 +37,28 @@ log = logging.getLogger("security_hub_accepter.py")
 
 
 class NoPendingInviteException(Exception):
-    pass
+    """Custom exception for no pending invite."""
 
 
-class AssumeRoleProvider(object):
+class AssumeRoleProvider(
+    object
+):  # pylint: disable=useless-object-inheritance, too-few-public-methods
+    """Refreshable assume-role credential provider."""
+
     METHOD = "assume-role"
 
-    def __init__(self, fetcher):
+    def __init__(self, fetcher):  # noqa: D107
         self._fetcher = fetcher
 
     def load(self):
+        """Load refreshable credential."""
         return botocore.credentials.DeferredRefreshableCredentials(
             self._fetcher.fetch_credentials, self.METHOD
         )
 
 
 def filter_none_values(data):
-    """Returns a new dictionary excluding items where value was None"""
+    """Return new dictionary excluding items where value was None."""
     return {k: v for k, v in data.items() if v is not None}
 
 
@@ -65,7 +69,8 @@ def assume_role(
     duration=3600,
     session_name=None,
     serial_number=None,
-):
+):  # pylint: disable=too-many-arguments
+    """Assume a role with a refreshable credential."""
     fetcher = botocore.credentials.AssumeRoleCredentialFetcher(
         session.create_client,
         session.get_credentials(),
@@ -88,6 +93,7 @@ def assume_role(
 
 
 def get_pending_invite_id(sechub, master_account_id):
+    """Get pending invite id."""
     invitations = sechub.list_invitations()
 
     for invite in invitations["Invitations"]:
@@ -98,14 +104,18 @@ def get_pending_invite_id(sechub, master_account_id):
         ):
             return invite_id
 
+    return None
+
 
 def accept_pending_invite(sechub, master_account_id, invite_id):
+    """Accept pending invite."""
     sechub.accept_invitation(MasterId=master_account_id, InvitationId=invite_id)
 
 
 def main(
     master_account_id, remove_master=False, profile=None, role_arn=None, region=None
 ):
+    """Entrypoint for accept invite for cross-account RAM Share."""
     region = region or None
     profile = profile or None
     role_arn = role_arn or None
