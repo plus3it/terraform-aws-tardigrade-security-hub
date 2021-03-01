@@ -30,10 +30,6 @@ module "accept" {
 
   master_account_id = data.aws_caller_identity.master.account_id
 
-  profile  = var.accepter_profile
-  role_arn = var.accepter_role_arn
-  region   = var.accepter_region
-
   depends_on = [
     module.member
   ]

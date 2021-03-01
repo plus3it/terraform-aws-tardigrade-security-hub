@@ -9,7 +9,7 @@ output "member" {
 }
 
 output "accept" {
-  description = "Object containing the SecurityHub (null) accepter resource"
+  description = "Object containing the SecurityHub accepter resource"
   value       = local.cross_account ? module.accept[0].accepter : null
 }
 
