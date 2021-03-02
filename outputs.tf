@@ -3,16 +3,6 @@ output "account" {
   value       = module.account.account
 }
 
-output "member" {
-  description = "Object containing the SecurityHub member resource"
-  value       = local.cross_account ? module.member[0].member : null
-}
-
-output "accept" {
-  description = "Object containing the SecurityHub accepter resource"
-  value       = local.cross_account ? module.accept[0].accepter : null
-}
-
 output "subscriptions" {
   description = "Object containing the SecurityHub subscriptions resources"
   value       = module.subscriptions

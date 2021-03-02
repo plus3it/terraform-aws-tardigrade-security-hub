@@ -19,9 +19,3 @@ variable "product_subscription_arns" {
   type        = list(string)
   default     = []
 }
-
-variable "member_email" {
-  description = "(Optional) Email address associated with the member account. Required for the cross-account SecurityHub member invite workflow"
-  type        = string
-  default     = null
-}
