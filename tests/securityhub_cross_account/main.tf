@@ -9,12 +9,12 @@ provider "aws" {
   profile = "resource-owner"
 }
 
-module "securityhub_member" {
-  source = "../../"
+module "securityhub" {
+  source = "../../modules/cross-account-member"
 
   providers = {
-    aws        = aws
-    aws.master = aws.resource-owner
+    aws               = aws
+    aws.administrator = aws.resource-owner
   }
 
   member_email = var.member_email
@@ -30,5 +30,5 @@ module "securityhub_member" {
 }
 
 output "securityhub" {
-  value = module.securityhub_member
+  value = module.securityhub
 }
