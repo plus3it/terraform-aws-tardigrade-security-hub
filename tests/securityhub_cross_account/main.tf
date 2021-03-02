@@ -17,9 +17,7 @@ module "securityhub_member" {
     aws.master = aws.resource-owner
   }
 
-  member_email     = var.member_email
-  accepter_region  = data.aws_region.current.name
-  accepter_profile = "resource-member"
+  member_email = var.member_email
 
   standard_subscription_arns = [
     "arn:aws:securityhub:::ruleset/cis-aws-foundations-benchmark/v/1.2.0",
@@ -30,8 +28,6 @@ module "securityhub_member" {
     "arn:aws:securityhub:us-east-1:453761072151:product/turbot/turbot",
   ]
 }
-
-data "aws_region" "current" {}
 
 output "securityhub" {
   value = module.securityhub_member
