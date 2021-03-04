@@ -19,27 +19,3 @@ variable "product_subscription_arns" {
   type        = list(string)
   default     = []
 }
-
-variable "member_email" {
-  description = "(Optional) Email address associated with the member account. Required for the cross-account SecurityHub member invite workflow"
-  type        = string
-  default     = null
-}
-
-variable "accepter_profile" {
-  description = "(Optional) Used by null_resource accepter to establish botocore session. Required for the cross-account SecurityHub member accept workflow"
-  type        = string
-  default     = ""
-}
-
-variable "accepter_role_arn" {
-  description = "(Optional) Used by null_resource accepter to assume a role in the accepter account. Required for the cross-account SecurityHub member accept workflow"
-  type        = string
-  default     = ""
-}
-
-variable "accepter_region" {
-  description = "(Optional) Used by null_resource accepter to establish botocore client. Required for the cross-account SecurityHub member accept workflow"
-  type        = string
-  default     = ""
-}

@@ -3,19 +3,8 @@ provider "aws" {
   profile = "resource-owner"
 }
 
-provider "aws" {
-  region  = "us-east-1"
-  alias   = "resource-owner"
-  profile = "resource-owner"
-}
-
 module "securityhub" {
   source = "../../"
-
-  providers = {
-    aws        = aws
-    aws.master = aws.resource-owner
-  }
 
   standard_subscription_arns = [
     "arn:aws:securityhub:::ruleset/cis-aws-foundations-benchmark/v/1.2.0",
