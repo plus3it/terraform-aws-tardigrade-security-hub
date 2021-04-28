@@ -18,12 +18,8 @@ module "member" {
     aws = aws.administrator
   }
 
-  account_id = data.aws_caller_identity.this.account_id
+  account_id = module.account.account.id
   email      = var.member_email
-
-  depends_on = [
-    module.account
-  ]
 }
 
 # Accept invite
@@ -36,8 +32,6 @@ module "accept" {
     module.member
   ]
 }
-
-data "aws_caller_identity" "this" {}
 
 data "aws_caller_identity" "administrator" {
   provider = aws.administrator
