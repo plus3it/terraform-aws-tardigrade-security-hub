@@ -12,7 +12,6 @@
 
 | Name | Version |
 |------|---------|
-| aws | >= 3.29.0 |
 | aws.administrator | >= 3.29.0 |
 
 ## Inputs
