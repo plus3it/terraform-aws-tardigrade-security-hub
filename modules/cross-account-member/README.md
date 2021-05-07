@@ -5,32 +5,38 @@
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.13 |
-| aws | >= 3.29.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.13 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.29.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws.administrator | >= 3.29.0 |
+| <a name="provider_aws.administrator"></a> [aws.administrator](#provider\_aws.administrator) | >= 3.29.0 |
+
+## Resources
+
+| Name | Type |
+|------|------|
+| [aws_caller_identity.administrator](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| member\_email | Email address associated with the member account. Required for the cross-account SecurityHub member invite workflow | `string` | n/a | yes |
-| action\_targets | Schema list of SecurityHub action targets. | <pre>list(object({<br>    name        = string<br>    description = string<br>    identifer   = string<br>  }))</pre> | `[]` | no |
-| product\_subscription\_arns | List of product arns to subscribe to. See https://www.terraform.io/docs/providers/aws/r/securityhub_product_subscription.html | `list(string)` | `[]` | no |
-| standard\_subscription\_arns | List of standard arns to subscribe to. See https://www.terraform.io/docs/providers/aws/r/securityhub_standards_subscription.html | `list(string)` | `[]` | no |
+| <a name="input_member_email"></a> [member\_email](#input\_member\_email) | Email address associated with the member account. Required for the cross-account SecurityHub member invite workflow | `string` | n/a | yes |
+| <a name="input_action_targets"></a> [action\_targets](#input\_action\_targets) | Schema list of SecurityHub action targets. | <pre>list(object({<br>    name        = string<br>    description = string<br>    identifer   = string<br>  }))</pre> | `[]` | no |
+| <a name="input_product_subscription_arns"></a> [product\_subscription\_arns](#input\_product\_subscription\_arns) | List of product arns to subscribe to. See https://www.terraform.io/docs/providers/aws/r/securityhub_product_subscription.html | `list(string)` | `[]` | no |
+| <a name="input_standard_subscription_arns"></a> [standard\_subscription\_arns](#input\_standard\_subscription\_arns) | List of standard arns to subscribe to. See https://www.terraform.io/docs/providers/aws/r/securityhub_standards_subscription.html | `list(string)` | `[]` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| accepter | Object containing the SecurityHub accepter resource |
-| account | Object containing the SecurityHub account resource |
-| action\_targets | Object containing the SecurityHub action targets resources |
-| member | Object containing the SecurityHub member resource |
-| subscriptions | Object containing the SecurityHub subscriptions resources |
+| <a name="output_accepter"></a> [accepter](#output\_accepter) | Object containing the SecurityHub accepter resource |
+| <a name="output_account"></a> [account](#output\_account) | Object containing the SecurityHub account resource |
+| <a name="output_action_targets"></a> [action\_targets](#output\_action\_targets) | Object containing the SecurityHub action targets resources |
+| <a name="output_member"></a> [member](#output\_member) | Object containing the SecurityHub member resource |
+| <a name="output_subscriptions"></a> [subscriptions](#output\_subscriptions) | Object containing the SecurityHub subscriptions resources |
 
 <!-- END TFDOCS -->
