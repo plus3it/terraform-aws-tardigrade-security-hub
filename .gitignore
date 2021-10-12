@@ -17,3 +17,6 @@ tardigrade-ci/
 
 # Caching directory created by pytest
 tests/__pycache__/
+
+# terratest
+tests/go.*
