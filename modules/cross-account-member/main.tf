@@ -26,13 +26,5 @@ module "member" {
 module "accept" {
   source = "../accepter"
 
-  master_account_id = data.aws_caller_identity.administrator.account_id
-
-  depends_on = [
-    module.member
-  ]
-}
-
-data "aws_caller_identity" "administrator" {
-  provider = aws.administrator
+  master_account_id = module.member.member.master_id
 }

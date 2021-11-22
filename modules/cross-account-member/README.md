@@ -10,15 +10,11 @@
 
 ## Providers
 
-| Name | Version |
-|------|---------|
-| <a name="provider_aws.administrator"></a> [aws.administrator](#provider\_aws.administrator) | >= 3.29.0 |
+No providers.
 
 ## Resources
 
-| Name | Type |
-|------|------|
-| [aws_caller_identity.administrator](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
+No resources.
 
 ## Inputs
 

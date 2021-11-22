@@ -4,6 +4,28 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+### 2.0.2
+
+**Released**: 2021.11.22
+
+**Commit Delta**: [Change from 2.0.1 release](https://github.com/plus3it/terraform-aws-tardigrade-security-hub/compare/2.0.1...2.0.2)
+
+**Summary**:
+
+*   Eliminates depends_on by retreiving master_account_id from cross-account-member module.
+    See [PR #83](https://github.com/plus3it/terraform-aws-tardigrade-security-hub/pull/83).
+
+### 2.0.1
+
+**Released**: 2021.04.30
+
+**Commit Delta**: [Change from 2.0.0 release](https://github.com/plus3it/terraform-aws-tardigrade-security-hub/compare/2.0.0...2.0.1)
+
+**Summary**:
+
+*   Eliminates depends_on by retrieving member account_id from account module.
+    See [PR #64](https://github.com/plus3it/terraform-aws-tardigrade-security-hub/pull/64).
+
 ### 2.0.0
 
 **Released**: 2021.03.03
