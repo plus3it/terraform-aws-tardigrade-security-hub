@@ -1,21 +1,34 @@
+# Provider to use as the securityhub member (aka invitee)
 provider "aws" {
   region  = "us-east-1"
-  profile = "resource-member"
+  profile = "aws" # Profile must exist in your .aws/config
 }
 
+# Provider to use as the securityhub administrator
 provider "aws" {
   region  = "us-east-1"
-  alias   = "resource-owner"
-  profile = "resource-owner"
+  alias   = "admininstrator"
+  profile = "awsalternate" # Profile must exist in your .aws/config
+}
+
+# Enables/configures Security Hub in administrator account
+module "securityhub_owner" {
+  source = "../../"
+
+  providers = {
+    aws = aws.admininstrator
+  }
 }
 
 module "securityhub" {
   source = "../../modules/cross-account-member"
 
   providers = {
-    aws               = aws
-    aws.administrator = aws.resource-owner
+    aws.admininstrator = aws.admininstrator
   }
+
+  # Without the following line it takes two attepts to destroy the resources created by the test
+  depends_on = [module.securityhub_owner]
 
   member_email = var.member_email
 

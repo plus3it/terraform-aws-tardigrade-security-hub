@@ -1,7 +1,3 @@
-provider "aws" {
-  alias = "administrator"
-}
-
 # Enables/configures Security Hub in member account
 module "account" {
   source = "../../"
@@ -14,8 +10,9 @@ module "account" {
 # Send invite from administrator account
 module "member" {
   source = "../member"
+
   providers = {
-    aws = aws.administrator
+    aws = aws.admininstrator
   }
 
   account_id = module.account.account.id
@@ -25,6 +22,8 @@ module "member" {
 # Accept invite
 module "accept" {
   source = "../accepter"
+
+  depends_on = [module.account]
 
   master_account_id = module.member.member.master_id
 }
