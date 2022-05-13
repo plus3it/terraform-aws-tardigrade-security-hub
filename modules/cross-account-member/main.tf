@@ -12,7 +12,7 @@ module "member" {
   source = "../member"
 
   providers = {
-    aws = aws.admin
+    aws = aws.admininstrator
   }
 
   account_id = module.account.account.id
