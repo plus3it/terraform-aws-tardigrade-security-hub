@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+### 3.0.0
+
+**Released**: 2022.05.22
+
+**Commit Delta**: [Change from 2.0.2 release](https://github.com/plus3it/terraform-aws-tardigrade-security-hub/compare/2.0.2...3.0.0)
+
+**Summary**:
+
+*   Updated to use new configuration_aliases tag. Also updated the provider profiles names to match the test framework construct.
+
 ### 2.0.2
 
 **Released**: 2021.11.22
