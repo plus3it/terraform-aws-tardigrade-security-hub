@@ -7,7 +7,7 @@ provider "aws" {
 # Provider to use as the securityhub administrator
 provider "aws" {
   region  = "us-east-1"
-  alias   = "admininstrator"
+  alias   = "administrator"
   profile = "awsalternate" # Profile must exist in your .aws/config
 }
 
@@ -16,7 +16,7 @@ module "securityhub_owner" {
   source = "../../"
 
   providers = {
-    aws = aws.admininstrator
+    aws = aws.administrator
   }
 }
 
@@ -24,7 +24,7 @@ module "securityhub" {
   source = "../../modules/cross-account-member"
 
   providers = {
-    aws.admininstrator = aws.admininstrator
+    aws.administrator = aws.administrator
   }
 
   # Without the following line it takes two attepts to destroy the resources created by the test
