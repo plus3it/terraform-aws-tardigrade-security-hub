@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+### 3.0.1
+
+**Released**: 2022.05.27
+
+**Commit Delta**: [Change from 3.0.0 release](https://github.com/plus3it/terraform-aws-tardigrade-security-hub/compare/3.0.0...3.0.1)
+
+**Summary**:
+
+*   Fixes typo in provider alias, admininstrator => administrator
+
 ### 3.0.0
 
 **Released**: 2022.05.13
