@@ -5,7 +5,7 @@ terraform {
     aws = {
       source                = "hashicorp/aws"
       version               = ">= 3.29.0"
-      configuration_aliases = [aws.admininstrator]
+      configuration_aliases = [aws.administrator]
     }
   }
 }
