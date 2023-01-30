@@ -1,0 +1,12 @@
+name: Run test jobs
+on:
+  pull_request:
+
+# Cancel other test workflows when source is updated
+concurrency:
+  group: test-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    uses: plus3it/actions-workflows/.github/workflows/test.yml@v1
