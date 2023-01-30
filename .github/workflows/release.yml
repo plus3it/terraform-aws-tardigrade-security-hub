@@ -13,6 +13,6 @@ on:
 
 jobs:
   release:
-    uses: plus3it/actions-workflows/.github/workflows/release.yml@v1
+    uses: plus3it/actions-workflows/.github/workflows/release.yml@41056300ba78d8be98b45f057aea246f8c4f30cf
     secrets:
       release-token: ${{ secrets.GH_RELEASES_TOKEN }}
