@@ -5,8 +5,18 @@ updates:
     directory: /
     schedule:
       interval: weekly
-  # Maintain dependencies for dockerfiles
   - package-ecosystem: docker
-    directory: /
+    directory: "/"
     schedule:
-      interval: weekly
+      interval: daily
+    open-pull-requests-limit: 10
+  - package-ecosystem: terraform
+    directory: "/"
+    schedule:
+      interval: daily
+    open-pull-requests-limit: 10
+  - package-ecosystem: gomod
+    directory: "/tests"
+    schedule:
+      interval: daily
+    open-pull-requests-limit: 10
