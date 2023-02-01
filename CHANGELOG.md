@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+### 3.0.2
+
+**Released**: 2023.02.01
+
+**Commit Delta**: [Change from 3.0.1 release](https://github.com/plus3it/terraform-aws-tardigrade-security-hub/compare/3.0.1...3.0.2)
+
+**Summary**:
+
+*   Migrating CI workflow from Travis CI to Github Actions. Updating release version to test release conditions.
+
+
 ### 3.0.1
 
 **Released**: 2022.05.27
