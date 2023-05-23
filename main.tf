@@ -1,6 +1,8 @@
 # Enable SecurityHub
 module "account" {
   source = "./modules/account"
+
+  control_finding_generator = var.control_finding_generator
 }
 
 # Manage subscriptions

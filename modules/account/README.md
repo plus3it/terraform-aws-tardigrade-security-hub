@@ -21,7 +21,9 @@
 
 ## Inputs
 
-No inputs.
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_control_finding_generator"></a> [control\_finding\_generator](#input\_control\_finding\_generator) | (Optional) Updates whether the calling account has consolidated control findings turned on. | `string` | `"SECURITY_CONTROL"` | no |
 
 ## Outputs
 

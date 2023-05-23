@@ -13,6 +13,12 @@ variable "action_targets" {
   default = []
 }
 
+variable "control_finding_generator" {
+  description = "(Optional) Updates whether the calling account has consolidated control findings turned on."
+  type        = string
+  default     = "SECURITY_CONTROL"
+}
+
 variable "product_subscription_arns" {
   description = "List of product arns to subscribe to. See https://www.terraform.io/docs/providers/aws/r/securityhub_product_subscription.html"
   type        = list(string)
