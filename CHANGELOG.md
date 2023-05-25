@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+### [4.0.0](https://github.com/plus3it/terraform-aws-tardigrade-security-hub/releases/tag/4.0.0)
+
+**Released**: 2023.05.25
+
+**Summary**:
+
+*   Adds support for security hub `control_finding_generator` feature
+*   Sets default value for `control_finding_generator` to `SECURITY_CONTROL`
+*   Updates minimum terraform aws provider version to 4.64.0
+
 ### 3.0.2
 
 **Released**: 2023.02.01

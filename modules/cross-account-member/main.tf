@@ -3,6 +3,7 @@ module "account" {
   source = "../../"
 
   action_targets             = var.action_targets
+  control_finding_generator  = var.control_finding_generator
   product_subscription_arns  = var.product_subscription_arns
   standard_subscription_arns = var.standard_subscription_arns
 }

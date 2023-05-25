@@ -1,6 +1,5 @@
 provider "aws" {
-  region  = "us-east-1"
-  profile = "resource-owner"
+  profile = "aws" # Profile must exist in your .aws/config
 }
 
 module "securityhub" {
