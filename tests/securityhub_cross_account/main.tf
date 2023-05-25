@@ -1,12 +1,10 @@
 # Provider to use as the securityhub member (aka invitee)
 provider "aws" {
-  region  = "us-east-1"
   profile = "aws" # Profile must exist in your .aws/config
 }
 
 # Provider to use as the securityhub administrator
 provider "aws" {
-  region  = "us-east-1"
   alias   = "administrator"
   profile = "awsalternate" # Profile must exist in your .aws/config
 }

@@ -6,7 +6,7 @@ the `modules/cross-account-member` module.
 ## Testing
 You can find example implementations of this module in the tests folder. This module
 requires 2 different AWS accounts to test and so the terraform aws provider definitions
-are assuming that you will be using a profile with the name `resource-owner` and `resource-member`.
+are assuming that you will be using a profile with the name `aws` and `awsalternate`.
 
 Note: the implementation `tests/create_securityhub_member` will require you to provide the variables
 `email_address` prior to use
