@@ -17,6 +17,22 @@ module "subscriptions" {
   ]
 }
 
+# Manage Control status
+module "standards_controls" {
+  source   = "./modules/standards_controls"
+  for_each = { for control in var.standards_controls : control.name => control }
+
+  standards_control_arn = each.value.standards_control_arn
+  control_status        = each.value.control_status
+  disabled_reason       = each.value.disabled_reason
+
+
+  depends_on = [
+    module.account,
+    module.subscriptions
+  ]
+}
+
 # Manage action targets
 module "action_targets" {
   source   = "./modules/action_target"

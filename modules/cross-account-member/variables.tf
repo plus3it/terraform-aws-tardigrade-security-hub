@@ -30,3 +30,14 @@ variable "standard_subscription_arns" {
   type        = list(string)
   default     = []
 }
+
+variable "standards_controls" {
+  description = "List of Security Hub standards to enable or disable in current region."
+  type = list(object({
+    name                  = string
+    standards_control_arn = string
+    control_status        = string
+    disabled_reason       = string
+  }))
+  default = []
+}

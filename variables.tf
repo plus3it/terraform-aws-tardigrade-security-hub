@@ -8,6 +8,17 @@ variable "action_targets" {
   default = []
 }
 
+variable "standards_controls" {
+  description = "List of Security Hub standards to enable or disable in current region."
+  type = list(object({
+    name                  = string
+    standards_control_arn = string
+    control_status        = string
+    disabled_reason       = string
+  }))
+  default = []
+}
+
 variable "control_finding_generator" {
   description = "(Optional) Updates whether the calling account has consolidated control findings turned on."
   type        = string

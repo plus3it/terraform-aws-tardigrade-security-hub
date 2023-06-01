@@ -6,6 +6,7 @@ module "account" {
   control_finding_generator  = var.control_finding_generator
   product_subscription_arns  = var.product_subscription_arns
   standard_subscription_arns = var.standard_subscription_arns
+  standards_controls         = var.standards_controls
 }
 
 # Send invite from administrator account
