@@ -18,9 +18,9 @@ module "subscriptions" {
 }
 
 # Manage Control status
-module "standards_control" {
-  source   = "./modules/standards_control"
-  for_each = { for control in var.standards_control : control.name => control }
+module "standards_controls" {
+  source   = "./modules/standards_controls"
+  for_each = { for control in var.standards_controls : control.name => control }
 
   standards_control_arn = each.value.standards_control_arn
   control_status        = each.value.control_status

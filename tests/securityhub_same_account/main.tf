@@ -14,7 +14,7 @@ module "securityhub" {
     "arn:aws:securityhub:us-east-1:453761072151:product/turbot/turbot",
   ]
 
-  standards_control = [
+  standards_controls = [
     {
       name                  = "cis-aws-foundations-benchmark"
       standards_control_arn = "arn:aws:securityhub:us-east-1:303523384066:control/cis-aws-foundations-benchmark/v/1.2.0/1.10"

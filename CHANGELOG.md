@@ -5,11 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 ### [4.1.0](https://github.com/plus3it/terraform-aws-tardigrade-security-hub/releases/tag/4.1.0)
 
-**Released**: 2023.05.25
+**Released**: 2023.06.01
 
 **Summary**:
 
-*   Brought Standards_Control under management to enable or disable specified controls
+*   Brought Standards_Controls under management to enable or disable specified controls
 
 
 ### [4.0.0](https://github.com/plus3it/terraform-aws-tardigrade-security-hub/releases/tag/4.0.0)

@@ -8,7 +8,7 @@ variable "action_targets" {
   default = []
 }
 
-variable "standards_control" {
+variable "standards_controls" {
   description = "List of Security Hub standards to enable or disable in current region."
   type = list(object({
     name                  = string
