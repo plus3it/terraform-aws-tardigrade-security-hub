@@ -23,7 +23,9 @@
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_control_finding_generator"></a> [control\_finding\_generator](#input\_control\_finding\_generator) | (Optional) Updates whether the calling account has consolidated control findings turned on. | `string` | `"SECURITY_CONTROL"` | no |
+| <a name="input_auto_enable_controls"></a> [auto\_enable\_controls](#input\_auto\_enable\_controls) | Boolean that enables the security standards that Security Hub has designated as automatically enabled including: `AWS Foundational Security Best Practices v1.0.0` and `CIS AWS Foundations Benchmark v1.2.0` | `bool` | `true` | no |
+| <a name="input_control_finding_generator"></a> [control\_finding\_generator](#input\_control\_finding\_generator) | Manages whether the account reports consolidated control findings, or generates separate findings for every enabled standard. | `string` | `"SECURITY_CONTROL"` | no |
+| <a name="input_enable_default_standards"></a> [enable\_default\_standards](#input\_enable\_default\_standards) | Boolean that automatically enables new controls when they are added to standards that are enabled | `bool` | `true` | no |
 
 ## Outputs
 
