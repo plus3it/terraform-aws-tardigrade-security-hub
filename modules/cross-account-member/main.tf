@@ -3,7 +3,9 @@ module "account" {
   source = "../../"
 
   action_targets             = var.action_targets
+  auto_enable_controls       = var.auto_enable_controls
   control_finding_generator  = var.control_finding_generator
+  enable_default_standards   = var.enable_default_standards
   product_subscription_arns  = var.product_subscription_arns
   standard_subscription_arns = var.standard_subscription_arns
   standards_controls         = var.standards_controls
