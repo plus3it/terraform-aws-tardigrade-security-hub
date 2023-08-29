@@ -17,7 +17,16 @@ variable "auto_enable_controls" {
 variable "control_finding_generator" {
   description = "Manages whether the account reports consolidated control findings, or generates separate findings for every enabled standard."
   type        = string
-  default     = "SECURITY_CONTROL"
+  default     = null
+
+  validation {
+    condition = (
+      var.control_finding_generator != null ?
+      contains(["SECURITY_CONTROL", "STANDARDS_CONTROL"], var.control_finding_generator) :
+      true
+    )
+    error_message = "control_finding_generator must be one of: SECURITY_CONTROL, STANDARDS_CONTROL, null"
+  }
 }
 
 variable "enable_default_standards" {
