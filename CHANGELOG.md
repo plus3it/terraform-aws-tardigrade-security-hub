@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+### [5.0.0](https://github.com/plus3it/terraform-aws-tardigrade-security-hub/releases/tag/5.0.0)
+
+**Released**: 2024.12.30
+
+**Summary**:
+
+*   Simplifies implementation by removing unnecessary submodules
+*   Implements "single-object" input approach to make it easy to pass the input
+    object around in a root module and update it using `merge()`
+*   Eliminates use of module-level `depends_on`
+*   Uses newer `standards_control_associations` instead of `standards_control`
+    resource, due to explicit reference to `standards_arn` instead of requiring
+    `depends_on` for the standards subscription
+
 ### [4.2.1](https://github.com/plus3it/terraform-aws-tardigrade-security-hub/releases/tag/4.2.1)
 
 **Released**: 2023.08.30
