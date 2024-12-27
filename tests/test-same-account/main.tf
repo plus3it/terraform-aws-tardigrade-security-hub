@@ -46,8 +46,8 @@ module "security_hub" {
 }
 
 locals {
-  partition  = data.aws_partition.current.partition
-  region     = data.aws_region.current.name
+  partition = data.aws_partition.current.partition
+  region    = data.aws_region.current.name
 }
 
 data "aws_partition" "current" {}

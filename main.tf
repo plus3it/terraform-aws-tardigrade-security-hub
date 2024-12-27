@@ -56,8 +56,8 @@ locals {
     "arn:${local.partition}:securityhub:::ruleset/cis-aws-foundations-benchmark/v/1.2.0",
   ]
 
-  partition  = data.aws_partition.current.partition
-  region     = data.aws_region.current.name
+  partition = data.aws_partition.current.partition
+  region    = data.aws_region.current.name
 }
 
 data "aws_partition" "current" {}

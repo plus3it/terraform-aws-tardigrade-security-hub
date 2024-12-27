@@ -18,45 +18,60 @@ module "securityhub_owner" {
   }
 }
 
-module "securityhub" {
+module "security_hub" {
   source = "../../modules/cross-account-member"
 
   providers = {
     aws.administrator = aws.administrator
   }
 
-  # Without the following line it takes two attepts to destroy the resources created by the test
-  depends_on = [module.securityhub_owner]
+  security_hub = {
+    member_email = var.member_email
+    master_id    = module.securityhub_owner.account.id
 
-  member_email = var.member_email
+    auto_enable_controls      = true
+    control_finding_generator = null # "SECURITY_CONTROL|STANDARD_CONTROL"
+    enable_default_standards  = true # Enables CIS AWS Foundations and AWS Foundational Security Best Practices
 
-  standard_subscription_arns = [
-    "arn:aws:securityhub:::ruleset/cis-aws-foundations-benchmark/v/1.2.0",
-    "arn:aws:securityhub:us-east-1::standards/pci-dss/v/3.2.1",
-  ]
+    standard_subscription_arns = [
+      "arn:${local.partition}:securityhub:${local.region}::standards/aws-resource-tagging-standard/v/1.0.0",
+      "arn:${local.partition}:securityhub:${local.region}::standards/pci-dss/v/3.2.1",
+    ]
 
-  product_subscription_arns = [
-    "arn:aws:securityhub:us-east-1:453761072151:product/turbot/turbot",
-  ]
+    product_subscription_arns = [
+      "arn:${local.partition}:securityhub:${local.region}:453761072151:product/turbot/turbot",
+    ]
 
-  standards_controls = [
-    {
-      name                  = "cis-aws-foundations-benchmark"
-      standards_control_arn = "arn:aws:securityhub:us-east-1:303523384066:control/cis-aws-foundations-benchmark/v/1.2.0/1.10"
-      control_status        = "ENABLED"
-      disabled_reason       = ""
-    },
-    {
-      name                  = "pci-dss"
-      standards_control_arn = "arn:aws:securityhub:us-east-1:303523384066:control/pci-dss/v/3.2.1/PCI.AutoScaling.1"
-      control_status        = "DISABLED"
-      disabled_reason       = "I don't like security"
-    }
-  ]
+    standards_control_associations = [
+      {
+        name                = "cis-foundations-cloudtrail-2"
+        association_status  = "DISABLED"
+        security_control_id = "CloudTrail.2"
+        updated_reason      = "I don't like security"
+        standards_arn       = "arn:${local.partition}:securityhub:::ruleset/cis-aws-foundations-benchmark/v/1.2.0"
+      },
+      {
+        name                = "aws-foundations-cloudtrail-2"
+        association_status  = "DISABLED"
+        security_control_id = "CloudTrail.2"
+        updated_reason      = "I don't like security"
+        standards_arn       = "arn:${local.partition}:securityhub:${local.region}::standards/aws-foundational-security-best-practices/v/1.0.0"
+      },
+      {
+        name                = "pci-dss-cloudtrail-2"
+        association_status  = "DISABLED"
+        security_control_id = "CloudTrail.2"
+        updated_reason      = "I don't like security"
+        standards_arn       = "arn:${local.partition}:securityhub:${local.region}::standards/pci-dss/v/3.2.1"
+      },
+    ]
+  }
 }
 
-output "securityhub" {
-  value = module.securityhub
+locals {
+  partition = data.aws_partition.current.partition
+  region    = data.aws_region.current.name
 }
 
-
+data "aws_partition" "current" {}
+data "aws_region" "current" {}

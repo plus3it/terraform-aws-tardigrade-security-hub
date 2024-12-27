@@ -1,5 +1,6 @@
 variable "security_hub" {
   description = "Object of inputs for Security Hub configuration"
+  nullable    = false
   type = object({
     auto_enable_controls      = optional(bool, true)
     control_finding_generator = optional(string)
@@ -22,6 +23,7 @@ variable "security_hub" {
       updated_reason      = optional(string)
     })), [])
   })
+  default = {}
 
   validation {
     condition = anytrue([
