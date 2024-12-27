@@ -1,7 +1,12 @@
 resource "aws_securityhub_account" "this" {
   auto_enable_controls      = var.security_hub.auto_enable_controls
   control_finding_generator = var.security_hub.control_finding_generator
-  enable_default_standards  = false
+
+  # Set to `false` and instead use `aws_securityhub_standards_subscription` to
+  # enable default standards. This ensures the standards_arn will always be present,
+  # so it can be used in the `aws_securityhub_standards_control_association` resource
+  # to create the dependency on the subscription.
+  enable_default_standards = false
 }
 
 resource "aws_securityhub_action_target" "this" {
