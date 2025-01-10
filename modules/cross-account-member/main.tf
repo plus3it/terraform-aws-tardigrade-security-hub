@@ -2,32 +2,26 @@
 module "account" {
   source = "../../"
 
-  action_targets             = var.action_targets
-  auto_enable_controls       = var.auto_enable_controls
-  control_finding_generator  = var.control_finding_generator
-  enable_default_standards   = var.enable_default_standards
-  product_subscription_arns  = var.product_subscription_arns
-  standard_subscription_arns = var.standard_subscription_arns
-  standards_controls         = var.standards_controls
+  security_hub = var.security_hub
 }
 
-# Send invite from administrator account
-module "member" {
-  source = "../member"
-
-  providers = {
-    aws = aws.administrator
-  }
+resource "aws_securityhub_member" "this" {
+  provider = aws.administrator
 
   account_id = module.account.account.id
-  email      = var.member_email
+  email      = var.security_hub.member_email
+  invite     = true
 }
 
-# Accept invite
-module "accept" {
-  source = "../accepter"
+resource "aws_securityhub_invite_accepter" "this" {
+  master_id = terraform_data.accepter_dependencies.input.master_id
+}
 
-  depends_on = [module.account]
-
-  master_account_id = module.member.member.master_id
+# Creates dependency on `module.account.account.id`, so security hub is enabled
+# in the account before the invite can be accepted
+resource "terraform_data" "accepter_dependencies" {
+  input = {
+    master_id  = coalesce(var.security_hub.master_id, aws_securityhub_member.this.master_id)
+    account_id = module.account.account.id
+  }
 }

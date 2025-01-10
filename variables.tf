@@ -1,59 +1,38 @@
-variable "action_targets" {
-  description = "Schema list of SecurityHub action targets."
-  type = list(object({
-    name        = string
-    description = string
-    identifer   = string
-  }))
-  default = []
-}
+variable "security_hub" {
+  description = "Object of inputs for Security Hub configuration"
+  nullable    = false
+  type = object({
+    auto_enable_controls      = optional(bool, true)
+    control_finding_generator = optional(string)
+    enable_default_standards  = optional(bool, true)
 
-variable "auto_enable_controls" {
-  description = "Boolean that enables the security standards that Security Hub has designated as automatically enabled including: `AWS Foundational Security Best Practices v1.0.0` and `CIS AWS Foundations Benchmark v1.2.0`"
-  type        = bool
-  default     = true
-}
+    product_subscription_arns  = optional(list(string), [])
+    standard_subscription_arns = optional(list(string), [])
 
-variable "control_finding_generator" {
-  description = "Manages whether the account reports consolidated control findings, or generates separate findings for every enabled standard."
-  type        = string
-  default     = null
+    action_targets = optional(list(object({
+      name        = string
+      description = string
+      identifier  = string
+    })), [])
+
+    standards_control_associations = optional(list(object({
+      name                = string
+      association_status  = string
+      security_control_id = string
+      standards_arn       = string
+      updated_reason      = optional(string)
+    })), [])
+  })
+  default = {}
 
   validation {
-    condition = (
-      var.control_finding_generator != null ?
-      contains(["SECURITY_CONTROL", "STANDARDS_CONTROL"], var.control_finding_generator) :
-      true
+    condition = anytrue([
+      var.security_hub.control_finding_generator == null,
+      contains(["SECURITY_CONTROL", "STANDARD_CONTROL"], format("%v", var.security_hub.control_finding_generator)),
+    ])
+    error_message = format(
+      "Expected `control_finding_generator` to be one of [\"STANDARD_CONTROL\", \"SECURITY_CONTROL\"], got %v.",
+      var.security_hub.control_finding_generator
     )
-    error_message = "control_finding_generator must be one of: SECURITY_CONTROL, STANDARDS_CONTROL, null"
   }
-}
-
-variable "enable_default_standards" {
-  description = "Boolean that automatically enables new controls when they are added to standards that are enabled"
-  type        = bool
-  default     = true
-}
-
-variable "product_subscription_arns" {
-  description = "List of product arns to subscribe to. See https://www.terraform.io/docs/providers/aws/r/securityhub_product_subscription.html"
-  type        = list(string)
-  default     = []
-}
-
-variable "standard_subscription_arns" {
-  description = "List of standard arns to subscribe to. See https://www.terraform.io/docs/providers/aws/r/securityhub_standards_subscription.html"
-  type        = list(string)
-  default     = []
-}
-
-variable "standards_controls" {
-  description = "List of Security Hub standards to enable or disable in current region."
-  type = list(object({
-    name                  = string
-    standards_control_arn = string
-    control_status        = string
-    disabled_reason       = string
-  }))
-  default = []
 }

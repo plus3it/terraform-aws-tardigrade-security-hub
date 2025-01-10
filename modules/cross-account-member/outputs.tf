@@ -1,24 +1,14 @@
 output "account" {
-  description = "Object containing the SecurityHub account resource"
-  value       = module.account.account
+  description = "Object containing the SecurityHub resources"
+  value       = module.account
 }
 
 output "member" {
   description = "Object containing the SecurityHub member resource"
-  value       = module.member.member
+  value       = aws_securityhub_member.this
 }
 
 output "accepter" {
   description = "Object containing the SecurityHub accepter resource"
-  value       = module.accept.accepter
-}
-
-output "subscriptions" {
-  description = "Object containing the SecurityHub subscriptions resources"
-  value       = module.account.subscriptions
-}
-
-output "action_targets" {
-  description = "Object containing the SecurityHub action targets resources"
-  value       = module.account.action_targets
+  value       = aws_securityhub_invite_accepter.this
 }
