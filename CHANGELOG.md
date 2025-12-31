@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+### [6.0.0](https://github.com/plus3it/terraform-aws-tardigrade-security-hub/releases/tag/6.0.0)
+
+**Released**: 2025.12.30
+
+**Summary**:
+
+*   Updates min AWS Provider version to v6
+*   Addresses deprecation warning for aws_region "name"
+
 ### [5.0.0](https://github.com/plus3it/terraform-aws-tardigrade-security-hub/releases/tag/5.0.0)
 
 **Released**: 2024.12.30
